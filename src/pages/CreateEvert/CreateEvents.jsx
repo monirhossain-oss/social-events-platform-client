@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import useAuth from "../../hookes/useAuth/useAuth";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hookes/useAxiosSecure";
+import { useState } from "react";
 
 const eventTypes = ["Cleanup", "Plantation", "Donation", "Food Distribution", "Blood Donation"];
 
@@ -14,7 +15,15 @@ const CreateEvent = () => {
     const axiosSecure = useAxiosSecure();
 
     const { register, handleSubmit, control, formState: { errors } } = useForm();
+    const [preview, setPreview] = useState(null);
 
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setPreview(URL.createObjectURL(file));
+        }
+    };
     const onSubmit = async (data) => {
         const eventData = {
             ...data,
@@ -34,8 +43,8 @@ const CreateEvent = () => {
             if (result.isConfirmed) {
                 // User confirmed, post data to DB
                 try {
-                    const res = await axiosSecure.post('/events',eventData)
-                     console.log(eventData)
+                    const res = await axiosSecure.post('/events', eventData)
+                    console.log(eventData)
                     if (res.data.insertedId) {
                         Swal.fire({
                             icon: "success",
@@ -44,7 +53,7 @@ const CreateEvent = () => {
                             timer: 1500,
                         });
                         navigate("/upcoming-events");
-                       
+
                     }
                 } catch (error) {
                     console.error(error);
@@ -110,9 +119,10 @@ const CreateEvent = () => {
 
                 {/* Thumbnail URL */}
                 <div>
+                    <label className="block mb-1 font-semibold">Thumbnail Image URL</label>
                     <input
                         {...register("thumbnail", { required: "Thumbnail URL is required" })}
-                        placeholder="Thumbnail Image URL"
+                        placeholder="Enter thumbnail image URL"
                         className={`input input-bordered w-full ${errors.thumbnail ? "input-error" : ""}`}
                     />
                     {errors.thumbnail && <p className="text-red-500 text-sm mt-1">{errors.thumbnail.message}</p>}
