@@ -5,6 +5,7 @@ import MainLayout from '../layouts/MainLayout/MainLayout';
 import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
 import Home from '../pages/Home/Home/Home';
+import UpcomingEvents from '../pages/UpcomingEvents/UpcomingEvents';
 
 export const router = createBrowserRouter([
     {
@@ -14,6 +15,10 @@ export const router = createBrowserRouter([
             {
                 index:true,
                 Component:Home
+            },
+            {
+                path: '/upcoming-events',
+                Component: UpcomingEvents
             },
             {
                 path:'login',
