@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Navigate, useParams } from "react-router";
 import Swal from "sweetalert2";
 import useAuth from "../../hookes/useAuth/useAuth";
 import useAxiosSecure from "../../hookes/useAxiosSecure";
+
 
 const EventDetails = () => {
     const { id } = useParams();
@@ -10,7 +11,7 @@ const EventDetails = () => {
     const [event, setEvent] = useState(null);
     const [loading, setLoading] = useState(true);
     const axiosSecure = useAxiosSecure();
-    console.log(event)
+    // console.log(event)
 
     useEffect(() => {
         axiosSecure.get(`/events/${id}`)
@@ -27,34 +28,37 @@ const EventDetails = () => {
     // Join Event function
     const handleJoinEvent = () => {
         if (!user) {
-            Swal.fire("Error", "You must be logged in to join an event", "error");
+            Swal.fire("Error", "Please login to join this event", "error");
+            Navigate('/login')
             return;
         }
 
         Swal.fire({
-            title: 'Are you sure?',
+            title: `Join Event?`,
             text: `Do you want to join "${event.title}"?`,
-            icon: 'question',
+            icon: "question",
             showCancelButton: true,
-            confirmButtonText: 'Join',
-            cancelButtonText: 'Cancel'
-        }).then((result) => {
+            confirmButtonText: "Yes, Join",
+            cancelButtonText: "Cancel"
+        }).then(result => {
             if (result.isConfirmed) {
-                
-                axiosSecure.post('/join-event', {
+                const joinData = {
                     eventId: event._id,
                     userEmail: user.email,
                     userName: user.displayName,
-                })
+                };
+
+                axiosSecure.post('/join-event', joinData)
                     .then(() => {
-                        Swal.fire('Joined!', 'You have successfully joined the event.', 'success');
+                        Swal.fire("Joined!", "You have successfully joined the event.", "success");
                     })
                     .catch(() => {
-                        Swal.fire('Error!', 'Failed to join the event. Try again later.', 'error');
+                        Swal.fire("Error", "Failed to join the event.", "error");
                     });
             }
         });
     };
+
 
     if (loading) return <p>Loading...</p>;
     if (!event) return <p>Event not found</p>;

@@ -15,15 +15,8 @@ const CreateEvent = () => {
     const axiosSecure = useAxiosSecure();
 
     const { register, handleSubmit, control, formState: { errors } } = useForm();
-    const [preview, setPreview] = useState(null);
 
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setPreview(URL.createObjectURL(file));
-        }
-    };
     const onSubmit = async (data) => {
         const eventData = {
             ...data,
