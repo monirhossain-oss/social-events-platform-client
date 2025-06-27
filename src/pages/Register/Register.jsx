@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 import { FcGoogle } from 'react-icons/fc';
 import useAuth from '../../hookes/useAuth/useAuth';
+import Swal from 'sweetalert2';
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -12,6 +13,16 @@ const Register = () => {
         createUser(data.email, data.password)
             .then(res => {
                 console.log(res.user)
+                if (res) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Registation Successful!',
+                        text: 'Welcome back!',
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+
+                }
             })
             .catch(error => {
                 console.log(error)
@@ -22,6 +33,16 @@ const Register = () => {
         googleSignIn()
             .then(result => {
                 console.log(result.user)
+                if (result) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login Successful!',
+                        text: 'Welcome back!',
+                        timer: 2000,
+                        showConfirmButton: false,
+                    });
+
+                }
             })
             .catch(error => {
                 console.log(error)
@@ -57,13 +78,38 @@ const Register = () => {
                         {errors.photoURL && <p className="text-red-600">{errors.photoURL.message}</p>}
                         {/* password field  */}
                         <label className="label font-semibold text-lg">Password</label>
-                        <input type="password" {...register('password', { required: true, minLength: 6 })} className="input" placeholder="Password" />
-                        {
-                            errors.password?.type === 'minLength' && <p className='text-red-500'>Password Minimum 6 Carecters</p>
-                        }
-                        {
-                            errors.password?.type === 'required' && <p className='text-red-500'>Please type your Password</p>
-                        }
+                        <input
+                            type="password"
+                            {...register('password', {
+                                required: 'Please type your Password',
+                                minLength: {
+                                    value: 6,
+                                    message: 'Password must be at least 6 characters long',
+                                },
+                                validate: {
+                                    hasUppercase: (value) =>
+                                        /[A-Z]/.test(value) || 'Password must contain at least one uppercase letter',
+                                    hasLowercase: (value) =>
+                                        /[a-z]/.test(value) || 'Password must contain at least one lowercase letter',
+                                },
+                            })}
+                            className="input input-bordered w-full"
+                            placeholder="Password"
+                        />
+                        {errors.password && (
+                            <div className="text-red-500 text-sm mt-1 space-y-1">
+                                {errors.password.types ? (
+                                    <>
+                                        {errors.password.types.minLength && <p>{errors.password.types.minLength}</p>}
+                                        {errors.password.types.hasUppercase && <p>{errors.password.types.hasUppercase}</p>}
+                                        {errors.password.types.hasLowercase && <p>{errors.password.types.hasLowercase}</p>}
+                                    </>
+                                ) : (
+                                    <p>{errors.password.message}</p>
+                                )}
+                            </div>
+                        )}
+
                     </fieldset>
                     <button className="hover:bg-[#CAEB66] border-2 p-2 rounded-lg hover:border-[#CAEB66] cursor-pointer hover:text-red-500 font-bold w-full mt-4">Register</button>
                     <p className='mt-2'>Already Have An Account? <Link to='/login' className='text-red-500 font-bold btn-link'>Sing In</Link></p>
