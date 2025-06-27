@@ -6,6 +6,8 @@ import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
 import Home from '../pages/Home/Home/Home';
 import UpcomingEvents from '../pages/UpcomingEvents/UpcomingEvents';
+import CreateEvent from '../pages/CreateEvert/CreateEvents';
+import PrivetRoutes from '../routes/Routes/PrivetRoutes';
 
 export const router = createBrowserRouter([
     {
@@ -27,6 +29,10 @@ export const router = createBrowserRouter([
             {
                 path: 'register',
                 Component: Register,
+            },
+            {
+                path:'create-event',
+                element:<PrivetRoutes><CreateEvent></CreateEvent></PrivetRoutes>
             }
         ]
     },

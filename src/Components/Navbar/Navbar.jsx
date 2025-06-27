@@ -10,6 +10,9 @@ const Navbar = () => {
     const links = <>
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/upcoming-events'>Upcomming Events</NavLink></li>
+        {
+            user && <li><NavLink to='/create-event'>Create Event</NavLink></li>
+        }
     </>
 
     const handleLogOut = () => {
