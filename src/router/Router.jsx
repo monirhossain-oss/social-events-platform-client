@@ -8,6 +8,7 @@ import Home from '../pages/Home/Home/Home';
 import UpcomingEvents from '../pages/UpcomingEvents/UpcomingEvents';
 import CreateEvent from '../pages/CreateEvert/CreateEvents';
 import PrivetRoutes from '../routes/Routes/PrivetRoutes';
+import EventDetails from '../pages/EventDetails/EventDetails';
 
 export const router = createBrowserRouter([
     {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
             {
                 path:'create-event',
                 element:<PrivetRoutes><CreateEvent></CreateEvent></PrivetRoutes>
+            },
+            {
+                path:'/events/:id',
+                element:<PrivetRoutes><EventDetails></EventDetails></PrivetRoutes>
             }
         ]
     },
