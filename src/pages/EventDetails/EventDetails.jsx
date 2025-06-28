@@ -43,10 +43,11 @@ const EventDetails = () => {
         }).then(result => {
             if (result.isConfirmed) {
                 const joinData = {
-                    eventId: event._id,
-                    userEmail: user.email,
-                    userName: user.displayName,
+                    eventId: event?._id,
+                    userEmail: user?.email,
+                    userName: user?.displayName,
                 };
+
 
                 axiosSecure.post('/join-event', joinData)
                     .then(() => {

@@ -11,7 +11,10 @@ const Navbar = () => {
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/upcoming-events'>Upcomming Events</NavLink></li>
         {
-            user && <li><NavLink to='/create-event'>Create Event</NavLink></li>
+            user && <>
+                <li><NavLink to='/create-event'>Create Event</NavLink></li>
+                <li><NavLink to='/joined-events'>My Events</NavLink></li>
+            </>
         }
     </>
 
@@ -56,7 +59,7 @@ const Navbar = () => {
                             onClick={handleLogOut}
                             className="flex items-center gap-2 px-4 py-2 bg-red-400 hover:bg-red-600 cursor-pointer text-white font-semibold rounded-xl shadow-md transition duration-300 ease-in-out"
                         >
-                            
+
                             Logout
                         </button>
                     </> :
