@@ -13,7 +13,8 @@ const Navbar = () => {
         {
             user && <>
                 <li><NavLink to='/create-event'>Create Event</NavLink></li>
-                <li><NavLink to='/joined-events'>My Events</NavLink></li>
+                <li><NavLink to='/joined-events'>Join Events</NavLink></li>
+                <li><NavLink to='/my-events'>My Events</NavLink></li>
             </>
         }
     </>

@@ -5,7 +5,6 @@ import { useNavigate } from "react-router";
 import useAuth from "../../hookes/useAuth/useAuth";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hookes/useAxiosSecure";
-import { useState } from "react";
 
 const eventTypes = ["Cleanup", "Plantation", "Donation", "Food Distribution", "Blood Donation"];
 
@@ -23,6 +22,7 @@ const CreateEvent = () => {
             eventDate: data.eventDate.toISOString(),
             createdBy: user.email,
         };
+        console.log(eventData)
 
         // Show SweetAlert for confirmation
         Swal.fire({
@@ -37,7 +37,7 @@ const CreateEvent = () => {
                 // User confirmed, post data to DB
                 try {
                     const res = await axiosSecure.post('/events', eventData)
-                    console.log(eventData)
+                    // console.log(eventData)
                     if (res.data.insertedId) {
                         Swal.fire({
                             icon: "success",

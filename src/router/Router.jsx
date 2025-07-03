@@ -10,6 +10,8 @@ import CreateEvent from '../pages/CreateEvert/CreateEvents';
 import PrivetRoutes from '../routes/Routes/PrivetRoutes';
 import EventDetails from '../pages/EventDetails/EventDetails';
 import JoinedEvents from '../pages/JoinedEvents/JoinedEvents';
+import ManageEvents from '../pages/ManageEvents/ManageEvents';
+import UpdateEvent from '../pages/UpdateEvent/UpdateEvent';
 
 export const router = createBrowserRouter([
     {
@@ -43,6 +45,14 @@ export const router = createBrowserRouter([
             {
                 path:'joined-events',
                 element:<PrivetRoutes><JoinedEvents></JoinedEvents></PrivetRoutes>
+            },
+            {
+                path: '/my-events',
+                element: <PrivetRoutes><ManageEvents></ManageEvents></PrivetRoutes>
+            },
+            {
+                path:'/update-event/:id',
+                element:<PrivetRoutes><UpdateEvent></UpdateEvent></PrivetRoutes>
             }
         ]
     },

@@ -11,6 +11,7 @@ const EventDetails = () => {
     const [event, setEvent] = useState(null);
     const [loading, setLoading] = useState(true);
     const axiosSecure = useAxiosSecure();
+    const [joined, setJoined] = useState(false);
     // console.log(event)
 
     useEffect(() => {
@@ -25,7 +26,7 @@ const EventDetails = () => {
             });
     }, [id]);
 
-    // Join Event function
+
     const handleJoinEvent = () => {
         if (!user) {
             Swal.fire("Error", "Please login to join this event", "error");
@@ -50,12 +51,19 @@ const EventDetails = () => {
 
 
                 axiosSecure.post('/join-event', joinData)
-                    .then(() => {
-                        Swal.fire("Joined!", "You have successfully joined the event.", "success");
+                    .then(res => {
+                        if (res.data.joined) {
+                            Swal.fire("Info", "You have already joined this event.", "info");
+                            setJoined(true);
+                        } else {
+                            Swal.fire("Joined!", "You have successfully joined the event.", "success");
+                            setJoined(true);
+                        }
                     })
                     .catch(() => {
                         Swal.fire("Error", "Failed to join the event.", "error");
                     });
+
             }
         });
     };
@@ -96,9 +104,12 @@ const EventDetails = () => {
             <div className="text-center">
                 <button
                     onClick={handleJoinEvent}
-                    className="px-6 py-3 rounded-full bg-gradient-to-r cursor-pointer from-purple-500 to-pink-500 text-white font-semibold shadow-md hover:scale-105 hover:shadow-lg transition"
+                    disabled={joined}
+                    className={`px-6 py-3 rounded-full cursor-pointer font-semibold shadow-md transition
+                    ${joined ? 'bg-gray-400 cursor-not-allowed' : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:scale-105 hover:shadow-lg'}
+                `}
                 >
-                    Join Event
+                    {joined ? "Already Joined" : "Join Event"}
                 </button>
             </div>
         </div>

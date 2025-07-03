@@ -3,28 +3,47 @@ import { Link } from "react-router";
 import useAxiosSecure from "../../hookes/useAxiosSecure";
 
 const UpcomingEvents = () => {
-    const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
-    const axiosSecure = useAxiosSecure();  // Custom axios instance
+    const [events, setEvents] = useState([]);
+    const [type, setType] = useState('');
+
+    const [searchInput, setSearchInput] = useState('');
+    const [search, setSearch] = useState('');
+
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
         const fetchEvents = async () => {
+            setLoading(true);
             try {
-                const res = await axiosSecure.get("/events");
-                const today = new Date();
-                const upcomingEvents = res.data.filter(
-                    (event) => new Date(event.eventDate) >= today
-                );
-                setEvents(upcomingEvents);
+                let url = `/events?`;
+
+                if (type) {
+                    url += `type=${type}&`;
+                }
+                if (search) {
+                    url += `search=${search}&`;
+                }
+
+                const { data } = await axiosSecure.get(url);
+                setEvents(data);
             } catch (error) {
-                console.error("Error fetching events:", error);
+                console.error(error);
             } finally {
                 setLoading(false);
             }
         };
 
         fetchEvents();
-    }, [axiosSecure]);
+    }, [type, search, axiosSecure]);
+
+    const handleSearchKeyDown = (e) => {
+        if (e.key === "Enter") {
+            setSearch(searchInput);
+        }
+    };
+
+    const futureEvents = events.filter(event => new Date(event.eventDate) >= new Date());
 
     if (loading) {
         return (
@@ -41,15 +60,40 @@ const UpcomingEvents = () => {
                     Upcoming Social Development Events
                 </h2>
 
-                {events.length === 0 ? (
+
+                <div className="flex flex-col items-center justify-center md:flex-row gap-3 mb-8">
+
+                    <input
+                        type="text"
+                        placeholder="Search events by title and press Enter..."
+                        className="input input-bordered w-full max-w-xs"
+                        value={searchInput}
+                        onChange={(e) => setSearchInput(e.target.value)}
+                        onKeyDown={handleSearchKeyDown}
+                    />
+
+                    <select
+                        className="select select-bordered w-full max-w-xs"
+                        value={type}
+                        onChange={(e) => setType(e.target.value)}
+                    >
+                        <option value="">All Types</option>
+                        <option value="Cleanup">Cleanup</option>
+                        <option value="Plantation">Plantation</option>
+                        <option value="Charity Fundraising">Charity Fundraising</option>
+                        <option value="Community Workshop">Community Workshop</option>
+                    </select>
+                </div>
+
+                {futureEvents.length === 0 ? (
                     <p className="text-center text-gray-600 dark:text-gray-400">
                         No upcoming events found.
                     </p>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        {events.map((event) => (
+                        {futureEvents.map((event) => (
                             <div
-                                key={event._id} // MongoDB id
+                                key={event._id}
                                 className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition p-4 flex flex-col"
                             >
                                 <img
