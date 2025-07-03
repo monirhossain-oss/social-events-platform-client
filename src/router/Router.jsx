@@ -12,6 +12,7 @@ import EventDetails from '../pages/EventDetails/EventDetails';
 import JoinedEvents from '../pages/JoinedEvents/JoinedEvents';
 import ManageEvents from '../pages/ManageEvents/ManageEvents';
 import UpdateEvent from '../pages/UpdateEvent/UpdateEvent';
+import NotFound from '../pages/NotFound/NotFound';
 
 export const router = createBrowserRouter([
     {
@@ -53,6 +54,10 @@ export const router = createBrowserRouter([
             {
                 path:'/update-event/:id',
                 element:<PrivetRoutes><UpdateEvent></UpdateEvent></PrivetRoutes>
+            },
+            {
+                path: '*',
+                Component: NotFound
             }
         ]
     },
