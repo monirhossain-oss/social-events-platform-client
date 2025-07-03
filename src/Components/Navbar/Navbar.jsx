@@ -43,7 +43,7 @@ const Navbar = () => {
     );
 
     return (
-        <div className="navbar bg-base-100 shadow-sm px-4 sticky top-0 z-40">
+        <div className="navbar bg-gradient-to-r from-purple-400 via-purple-600 to-purple-800 opacity-80 rounded-xl px-4 sticky top-0 z-40">
             <div className="navbar-start">
                 <div className="dropdown lg:hidden">
                     <div tabIndex={0} role="button" className="btn btn-ghost">
@@ -57,7 +57,9 @@ const Navbar = () => {
                         {navLinks}
                     </ul>
                 </div>
-                <Logo />
+                <div>
+                    <Link>Socail Events</Link>
+                </div>
             </div>
 
             <div className="navbar-center hidden lg:flex">

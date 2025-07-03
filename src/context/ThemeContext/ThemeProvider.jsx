@@ -3,7 +3,6 @@ import React, { createContext, useEffect, useState } from 'react';
 export const ThemeContext = createContext();
 
 const ThemeProvider = ({ children }) => {
-    // প্রথমে লোকালথেকে থিম নেবে, না থাকলে light সেট করবে
     const [theme, setTheme] = useState('light');
 
     useEffect(() => {
