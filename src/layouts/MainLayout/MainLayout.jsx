@@ -1,12 +1,12 @@
 import React from 'react';
 import Navbar from '../../Components/Navbar/Navbar';
-import { Outlet } from 'react-router';
+import { Outlet } from 'react-router'; // ✅ এখানে 'react-router' এর পরিবর্তে 'react-router-dom' দিতে হবে
 
 const MainLayout = () => {
     return (
-        <div className='w-6xl mx-auto'>
-            <Navbar></Navbar>
-            <Outlet></Outlet>
+        <div className='max-w-6xl mx-auto'>
+            <Navbar />
+            <Outlet />
         </div>
     );
 };

@@ -71,7 +71,7 @@ const CreateEvent = () => {
 
     return (
         <div className="max-w-3xl mx-auto p-6 bg-white rounded shadow mt-8">
-            <h2 className="text-2xl font-bold mb-6 text-center">Create New Event</h2>
+            <h2 className="dark:text-2xl dark:font-bold dark:text-black mb-6 text-center">Create New Event</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
                 {/* Title */}
@@ -112,7 +112,7 @@ const CreateEvent = () => {
 
                 {/* Thumbnail URL */}
                 <div>
-                    <label className="block mb-1 font-semibold">Thumbnail Image URL</label>
+                    <label className="block dark:text-black mb-1 font-semibold">Thumbnail Image URL</label>
                     <input
                         {...register("thumbnail", { required: "Thumbnail URL is required" })}
                         placeholder="Enter thumbnail image URL"
