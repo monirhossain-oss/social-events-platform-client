@@ -1,12 +1,49 @@
-# React + Vite
+# 🌱 Social Development Events Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **community-driven event management platform** where users can create, join, and track social service events in their local area.
 
-Currently, two official plugins are available:
+Example Events:
+- "Road Cleaning in Mirpur 10, Dhaka”
+- "Tree Plantation - Hossainpur, Kishoreganj"
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Live Links
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Client:**[https://social-events-platform.web.app/].
+- **Server:**[https://socail-events-server.vercel.app/].
+
+## 🎯 Purpose
+
+To encourage social welfare activities in local communities by allowing users to:
+✅ Create and manage community events.  
+✅ Join and participate in social initiatives.  
+✅ Track upcoming and joined events seamlessly.
+
+---
+
+## ✨ Features
+
+✅ User authentication (Email/Password, Google).  
+✅ Create, manage, and join events.  
+✅ See upcoming events in a clean, responsive grid.  
+✅ JWT-based protected routes for secure user experience.  
+✅ Validation on forms with error notifications.  
+✅ Loader/spinner for a smooth user experience.  
+✅ Theme toggle (Light/Dark).  
+✅ Fully responsive for mobile, tablet, and desktop.
+
+---
+
+## ⚙️ Tech Stack
+
+- **Frontend:** React, React Router, TailwindCSS, DaisyUI, Axios, React Datepicker, SweetAlert2,React-Icons,Lucide-Icons.
+- **Backend:** Node.js, Express.js, MongoDB, CORS.
+- **Authentication:** Firebase Authentication.
+- **Deployment:** Firebase(client), Vercel (Server),Optional(Netlify (Client))
+
+---
+
+## 🔐 Environment Variables
+
+### Client (.env)
