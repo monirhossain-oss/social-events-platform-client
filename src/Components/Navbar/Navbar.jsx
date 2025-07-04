@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, NavLink, useNavigate } from 'react-router';
-import Logo from '../shared/Logo';
 import useAuth from '../../hookes/useAuth/useAuth';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import { FaUserCircle } from 'react-icons/fa';
@@ -43,7 +42,7 @@ const Navbar = () => {
     );
 
     return (
-        <div className="navbar bg-gradient-to-r from-purple-400 via-purple-600 to-purple-800 opacity-80 rounded-xl px-4 sticky top-0 z-40">
+        <div className="navbar bg-gradient-to-r from-gray-400 via-gray-600 to-purple-400 opacity-80 rounded-b-xl px-4 sticky top-0 z-40">
             <div className="navbar-start">
                 <div className="dropdown lg:hidden">
                     <div tabIndex={0} role="button" className="btn btn-ghost">
@@ -58,7 +57,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div>
-                    <Link>Socail Events</Link>
+                    <Link to='/' className="bg-gradient-to-r from-red-600 via-red-500 to-red-400 bg-clip-text text-2xl font-bold hidden md:block text-transparent ">Socail Events</Link>
                 </div>
             </div>
 

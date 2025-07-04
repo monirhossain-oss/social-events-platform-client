@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 .env
+pglite.debug.log
 
 # Editor directories and files
 .vscode/*
