@@ -68,7 +68,7 @@ const Login = () => {
     };
 
     return (
-        <div className="flex p-12 flex-col md:flex-row justify-center items-center gap-8 mt-8 max-w-6xl mx-auto">
+        <div className="flex p-12 flex-col md:flex-row justify-center items-center gap-8 mt-4 max-w-6xl mx-auto">
             {/* Card wrapper with no extra padding */}
             <div className="w-full md:w-1/2 max-w-md">
                 <div className="card bg-base-100 shadow-2xl w-full">

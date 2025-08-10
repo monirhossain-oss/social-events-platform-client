@@ -4,35 +4,33 @@ import { Link } from 'react-router';
 import { FcGoogle } from 'react-icons/fc';
 import useAuth from '../../hookes/useAuth/useAuth';
 import Swal from 'sweetalert2';
+import loginImg from '../../assets/Screenshot 2025-08-10 192952.png'
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { createUser, googleSignIn } = useAuth();
+
     const onSubmit = data => {
-        console.log(data)
         createUser(data.email, data.password)
             .then(res => {
-                console.log(res.user)
                 if (res) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Registation Successful!',
+                        title: 'Registration Successful!',
                         text: 'Welcome back!',
                         timer: 2000,
                         showConfirmButton: false,
                     });
-
                 }
             })
             .catch(error => {
-                console.log(error)
-            })
-    }
+                console.log(error);
+            });
+    };
 
     const handleGoogleSignIn = () => {
         googleSignIn()
             .then(result => {
-                console.log(result.user)
                 if (result) {
                     Swal.fire({
                         icon: 'success',
@@ -41,42 +39,63 @@ const Register = () => {
                         timer: 2000,
                         showConfirmButton: false,
                     });
-
                 }
             })
             .catch(error => {
-                console.log(error)
-            })
-    }
+                console.log(error);
+            });
+    };
 
     return (
-        <div className="card bg-base-100 w-full mx-auto mt-8 max-w-sm shrink-0 shadow-2xl">
-            <div className="card-body">
-                <h2 className="text-2xl  font-bold">Please Register</h2>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <fieldset className="fieldset">
-                        {/* name field  */}
-                        <label className='label font-semibold text-lg'>Name</label>
-                        <input type="text" {...register('name', { required: true, })} className="input" placeholder='Your Name' />
-                        {/* email field  */}
-                        <label className="label font-semibold text-lg">Email</label>
-                        <input type="email" {...register('email', { required: true, })} className="input" placeholder="Email" />
-                        {
-                            errors.email?.type === 'required' && <p className='text-red-500'>Email is required </p>
-                        }
-                        {/* photoURL field */}
-                        <label>Photo URL</label>
+        <div className="flex flex-col md:flex-row items-stretch justify-center min-h-[80vh] max-w-6xl mx-auto my-8 gap-8 px-4">
+            {/* Registration Form Card */}
+            <div className="card bg-base-100 w-full max-w-md shadow-2xl p-6">
+                <h2 className="text-2xl font-bold mb-6">Please Register</h2>
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                    {/* Name */}
+                    <div>
+                        <label className="label font-semibold text-lg">Name</label>
                         <input
+                            type="text"
+                            {...register('name', { required: 'Name is required' })}
+                            className="input input-bordered w-full"
+                            placeholder="Your Name"
+                        />
+                        {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                        <label className="label font-semibold text-lg">Email</label>
+                        <input
+                            type="email"
+                            {...register('email', { required: 'Email is required' })}
+                            className="input input-bordered w-full"
+                            placeholder="Email"
+                        />
+                        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+                    </div>
+
+                    {/* Photo URL */}
+                    <div>
+                        <label className="label font-semibold text-lg">Photo URL</label>
+                        <input
+                            type="text"
                             {...register('photoURL', {
                                 required: 'Photo URL is required',
-                                pattern: { value: /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp))$/i, message: 'Enter a valid image URL' }
+                                pattern: {
+                                    value: /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp))$/i,
+                                    message: 'Enter a valid image URL',
+                                },
                             })}
-                            type="text"
-                            placeholder="https://example.com/photo.jpg"
                             className="input input-bordered w-full"
+                            placeholder="https://example.com/photo.jpg"
                         />
-                        {errors.photoURL && <p className="text-red-600">{errors.photoURL.message}</p>}
-                        {/* password field  */}
+                        {errors.photoURL && <p className="text-red-500 text-sm mt-1">{errors.photoURL.message}</p>}
+                    </div>
+
+                    {/* Password */}
+                    <div>
                         <label className="label font-semibold text-lg">Password</label>
                         <input
                             type="password"
@@ -109,18 +128,39 @@ const Register = () => {
                                 )}
                             </div>
                         )}
+                    </div>
 
-                    </fieldset>
-                    <button className="hover:bg-[#CAEB66] border-2 p-2 rounded-lg hover:border-[#CAEB66] cursor-pointer hover:text-red-500 font-bold w-full mt-4">Register</button>
-                    <p className='mt-2'>Already Have An Account? <Link to='/login' className='text-red-500 font-bold btn-link'>Sing In</Link></p>
+                    <button
+                        type="submit"
+                        className="hover:bg-[#CAEB66] border-2 p-2 rounded-lg hover:border-[#CAEB66] cursor-pointer hover:text-red-500 font-bold w-full mt-4"
+                    >
+                        Register
+                    </button>
                 </form>
+
+                <p className="mt-4 text-center">
+                    Already Have An Account?{' '}
+                    <Link to="/login" className="text-red-500 font-bold btn-link">
+                        Sign In
+                    </Link>
+                </p>
+
                 <button
                     onClick={handleGoogleSignIn}
-                    className="flex cursor-pointer items-center mt-4 justify-center gap-3 w-full py-2 border-2 border-green-500 rounded-md shadow-sm  hover:bg-green-500 transition"
+                    className="flex cursor-pointer items-center mt-6 justify-center gap-3 w-full py-2 border-2 border-green-500 rounded-md shadow-sm hover:bg-green-500 transition"
                 >
                     <FcGoogle size={22} />
-                    <span className="text-gray-800 font-bold hover:text-black  ">Login with Google</span>
+                    <span className="text-gray-800 font-bold hover:text-black">Login with Google</span>
                 </button>
+            </div>
+
+            {/* Image */}
+            <div className="hidden md:block md:w-1/2 max-w-lg">
+                <img
+                    src={loginImg}
+                    alt="Registration Illustration"
+                    className="w-full h-full rounded-lg shadow-lg object-cover"
+                />
             </div>
         </div>
     );
