@@ -8,8 +8,6 @@ import useAxiosSecure from "../../hookes/useAxiosSecure";
 
 const eventTypes = ["Cleanup", "Plantation", "Donation", "Food Distribution", "Blood Donation"];
 
-// ⬅️ এখানে তোমার imgbb API key বসাবে
-const imgbbAPIKey = "8c9ab2efa23e928fe7697d0e5fbcf781";
 
 const CreateEvent = () => {
     const { user } = useAuth();
@@ -22,7 +20,7 @@ const CreateEvent = () => {
         const formData = new FormData();
         formData.append("image", file);
 
-        const res = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbAPIKey}`, {
+        const res = await fetch(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMG_BB_KEY}`, {
             method: "POST",
             body: formData,
         });
