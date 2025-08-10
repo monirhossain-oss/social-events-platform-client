@@ -8,8 +8,9 @@ const ThemeToggle = () => {
         <button
             onClick={toggleTheme}
             className="rounded-full text-2xl cursor-pointer text-black dark:text-white"
+            aria-label="Toggle Theme"
         >
-            {theme === 'dark' ?'🌙' :'☀️'}
+            {theme === "dark" ? "🌙" : "☀️"}
         </button>
     );
 };

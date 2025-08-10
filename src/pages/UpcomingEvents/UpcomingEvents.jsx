@@ -54,7 +54,7 @@ const UpcomingEvents = () => {
     }
 
     return (
-        <section className="py-12 my-8 rounded-2xl bg-gray-50 dark:bg-gray-900">
+        <section className="py-12  rounded-2xl bg-gray-50 dark:bg-gray-900">
             <div className="container mx-auto px-6">
                 <h2 className="text-3xl font-bold mb-8 text-center text-gray-800 dark:text-green-400">
                     Upcoming Social Development Events

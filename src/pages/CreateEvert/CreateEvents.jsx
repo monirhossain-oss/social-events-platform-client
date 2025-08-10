@@ -70,76 +70,83 @@ const CreateEvent = () => {
 
 
     return (
-        <div className="max-w-3xl mx-auto p-6 bg-white rounded shadow mt-8">
-            <h2 className="text-2xl font-bold text-green-500 dark:text-green-500 mb-6 text-center">Create New Event</h2>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div className=" dark:text-gray-400  rounded-lg shadow-lg  p-8">
+            <h2 className="text-3xl font-bold text-green-500 dark:text-green-500 mb-8 text-center">
+                Create New Event
+            </h2>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 
-                {/* Title */}
-                <div>
-                    <input
-                        {...register("title", { required: "Title is required" })}
-                        placeholder="Event Title"
-                        className={`input input-bordered w-full ${errors.title ? "input-error" : ""}`}
-                    />
-                    {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>}
+                {/* Row 1: Title & Event Type */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label className="block font-semibold mb-1">Event Title</label>
+                        <input
+                            {...register("title", { required: "Title is required" })}
+                            placeholder="Enter event title"
+                            className={`input input-bordered w-full ${errors.title ? "input-error" : ""}`}
+                        />
+                        {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>}
+                    </div>
+
+                    <div>
+                        <label className="block font-semibold mb-1">Event Type</label>
+                        <select
+                            {...register("type", { required: "Event type is required" })}
+                            className={`select select-bordered w-full ${errors.type ? "select-error" : ""}`}
+                            defaultValue=""
+                        >
+                            <option value="" disabled>Select event type</option>
+                            {eventTypes.map((type) => (
+                                <option key={type} value={type}>{type}</option>
+                            ))}
+                        </select>
+                        {errors.type && <p className="text-red-500 text-sm mt-1">{errors.type.message}</p>}
+                    </div>
                 </div>
 
-                {/* Description */}
+                {/* Row 2: Thumbnail URL & Location */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label className="block font-semibold mb-1">Thumbnail URL</label>
+                        <input
+                            {...register("thumbnail", { required: "Thumbnail URL is required" })}
+                            placeholder="Enter thumbnail image URL"
+                            className={`input input-bordered w-full ${errors.thumbnail ? "input-error" : ""}`}
+                        />
+                        {errors.thumbnail && <p className="text-red-500 text-sm mt-1">{errors.thumbnail.message}</p>}
+                    </div>
+
+                    <div>
+                        <label className="block font-semibold mb-1">Location</label>
+                        <input
+                            {...register("location", { required: "Location is required" })}
+                            placeholder="Enter event location"
+                            className={`input input-bordered w-full ${errors.location ? "input-error" : ""}`}
+                        />
+                        {errors.location && <p className="text-red-500 text-sm mt-1">{errors.location.message}</p>}
+                    </div>
+                </div>
+                {/* Row 4: Description */}
                 <div>
+                    <label className="block font-semibold mb-1">Event Description</label>
                     <textarea
                         {...register("description", { required: "Description is required" })}
-                        placeholder="Event Description"
-                        className={`textarea textarea-bordered w-full ${errors.description ? "textarea-error" : ""}`}
-                        rows={4}
+                        placeholder="Write a short description..."
+                        className={`textarea textarea-bordered w-full min-h-[120px] ${errors.description ? "textarea-error" : ""}`}
                     />
                     {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
                 </div>
 
-                {/* Event Type */}
+                {/* Row 3: Event Date */}
                 <div>
-                    <select
-                        {...register("type", { required: "Event type is required" })}
-                        className={`select select-bordered w-full ${errors.type ? "select-error" : ""}`}
-                        defaultValue=""
-                    >
-                        <option value="" disabled>Select Event Type</option>
-                        {eventTypes.map((type) => (
-                            <option key={type} value={type}>{type}</option>
-                        ))}
-                    </select>
-                    {errors.type && <p className="text-red-500 text-sm mt-1">{errors.type.message}</p>}
-                </div>
-
-                {/* Thumbnail URL */}
-                <div>
-                    <label className="block dark:text-black mb-1 font-semibold">Thumbnail Image URL</label>
-                    <input
-                        {...register("thumbnail", { required: "Thumbnail URL is required" })}
-                        placeholder="Enter thumbnail image URL"
-                        className={`input input-bordered w-full ${errors.thumbnail ? "input-error" : ""}`}
-                    />
-                    {errors.thumbnail && <p className="text-red-500 text-sm mt-1">{errors.thumbnail.message}</p>}
-                </div>
-
-                {/* Location */}
-                <div>
-                    <input
-                        {...register("location", { required: "Location is required" })}
-                        placeholder="Event Location"
-                        className={`input input-bordered w-full ${errors.location ? "input-error" : ""}`}
-                    />
-                    {errors.location && <p className="text-red-500 text-sm mt-1">{errors.location.message}</p>}
-                </div>
-
-                {/* Event Date */}
-                <div>
+                    <label className="block font-semibold mb-1">Event Date</label>
                     <Controller
                         control={control}
                         name="eventDate"
                         rules={{ required: "Event date is required" }}
                         render={({ field }) => (
                             <DatePicker
-                                placeholderText="Select Event Date"
+                                placeholderText="Select event date"
                                 selected={field.value}
                                 onChange={field.onChange}
                                 minDate={new Date()}
@@ -151,9 +158,17 @@ const CreateEvent = () => {
                     {errors.eventDate && <p className="text-red-500 text-sm mt-1">{errors.eventDate.message}</p>}
                 </div>
 
-                <button type="submit" className="btn btn-primary w-full">Create Event</button>
+
+
+                {/* Submit Button */}
+                <div className="text-center">
+                    <button type="submit" className="btn btn-primary w-full px-8">
+                        Create Event
+                    </button>
+                </div>
             </form>
         </div>
+
     );
 };
 

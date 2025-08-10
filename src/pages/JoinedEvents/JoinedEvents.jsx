@@ -54,8 +54,15 @@ const JoinEvents = () => {
         setIsModalOpen(false);
     };
 
+    // Close modal if clicked outside modal content
+    const handleBackdropClick = (e) => {
+        if (e.target.id === 'modal-backdrop') {
+            closeModal();
+        }
+    };
+
     return (
-        <section className="bg-gray-100 p-6 rounded-lg shadow-lg">
+        <section className="p-6 rounded-lg shadow-lg">
             <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-green-400 text-center">
                 Your Joined Events
             </h2>
@@ -64,14 +71,14 @@ const JoinEvents = () => {
                 {joinedEvents.map(event => (
                     <div
                         key={event._id}
-                        className="bg-white rounded-lg shadow hover:shadow-xl transition p-5 flex flex-col"
+                        className="dark:bg-gray-100 bg-white rounded-lg shadow hover:shadow-xl transition p-5 flex flex-col"
                     >
                         <img
                             src={event.thumbnail}
                             alt={event.title}
                             className="rounded-md mb-4 h-40 object-cover"
                         />
-                        <h3 className="text-xl font-semibold mb-1 text-gray-800">{event.title}</h3>
+                        <h3 className="text-xl font-semibold mb-1 text-gray-700 dark:text-gray-200">{event.title}</h3>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                             <strong>Location:</strong> {event.location}
                         </p>
@@ -87,19 +94,23 @@ const JoinEvents = () => {
 
             {/* Modal */}
             {isModalOpen && selectedEvent && (
-                <dialog open className="modal modal-bottom sm:modal-middle">
-                    <div className="modal-box max-w-3xl">
+                <div
+                    id="modal-backdrop"
+                    onClick={handleBackdropClick}
+                    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+                >
+                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-3xl w-11/12 sm:w-3/4 md:w-2/3 p-6 overflow-y-auto max-h-[90vh] relative">
                         <img
                             src={selectedEvent.thumbnail}
                             alt={selectedEvent.title}
                             className="w-full h-64 object-cover rounded-md mb-4"
                         />
-                        <h2 className="text-2xl font-bold mb-2">{selectedEvent.title}</h2>
+                        <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-gray-100">{selectedEvent.title}</h2>
                         <p className="text-sm text-gray-500 mb-4">
                             <span className="badge badge-outline">{selectedEvent.type}</span>
                         </p>
 
-                        <div className="space-y-2">
+                        <div className="space-y-2 text-gray-800 dark:text-gray-300">
                             <p>
                                 <strong>📍 Location:</strong> {selectedEvent.location}
                             </p>
@@ -119,16 +130,14 @@ const JoinEvents = () => {
                             </p>
                         </div>
 
-                        <div className="modal-action">
-                            <button
-                                onClick={closeModal}
-                                className="btn btn-error text-white"
-                            >
-                                Close
-                            </button>
-                        </div>
+                        <button
+                            onClick={closeModal}
+                            className="btn btn-error text-white mt-6 block mx-auto"
+                        >
+                            Close
+                        </button>
                     </div>
-                </dialog>
+                </div>
             )}
         </section>
     );
