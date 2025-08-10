@@ -8,6 +8,9 @@ import useAxiosSecure from "../../hookes/useAxiosSecure";
 
 const eventTypes = ["Cleanup", "Plantation", "Donation", "Food Distribution", "Blood Donation"];
 
+// ⬅️ এখানে তোমার imgbb API key বসাবে
+const imgbbAPIKey = "8c9ab2efa23e928fe7697d0e5fbcf781";
+
 const CreateEvent = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
@@ -15,29 +18,46 @@ const CreateEvent = () => {
 
     const { register, handleSubmit, control, formState: { errors } } = useForm();
 
+    const uploadImageToImgbb = async (file) => {
+        const formData = new FormData();
+        formData.append("image", file);
+
+        const res = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbAPIKey}`, {
+            method: "POST",
+            body: formData,
+        });
+        const data = await res.json();
+        return data.data.url;
+    };
 
     const onSubmit = async (data) => {
-        const eventData = {
-            ...data,
-            eventDate: data.eventDate.toISOString(),
-            createdBy: user.email,
-        };
-        console.log(eventData)
+        try {
+            let imageUrl = "";
+            if (data.thumbnail[0]) {
+                imageUrl = await uploadImageToImgbb(data.thumbnail[0]);
+            }
+            console.log(imageUrl)
 
-        // Show SweetAlert for confirmation
-        Swal.fire({
-            title: "Confirm Event Submission",
-            text: "Do you want to submit this event now?",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonText: "Confirm",
-            cancelButtonText: "Edit",
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                // User confirmed, post data to DB
-                try {
-                    const res = await axiosSecure.post('/events', eventData)
-                    // console.log(eventData)
+            const eventData = {
+                title: data.title,
+                type: data.type,
+                thumbnail: imageUrl,
+                location: data.location,
+                description: data.description,
+                eventDate: data.eventDate.toISOString(),
+                createdBy: user.email,
+            };
+
+            Swal.fire({
+                title: "Confirm Event Submission",
+                text: "Do you want to submit this event now?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonText: "Confirm",
+                cancelButtonText: "Edit",
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const res = await axiosSecure.post("/events", eventData);
                     if (res.data.insertedId) {
                         Swal.fire({
                             icon: "success",
@@ -46,37 +66,26 @@ const CreateEvent = () => {
                             timer: 1500,
                         });
                         navigate("/upcoming-events");
-
                     }
-                } catch (error) {
-                    console.error(error);
-                    Swal.fire({
-                        icon: "error",
-                        title: "Error Creating Event",
-                        text: error.message,
-                    });
                 }
-            } else {
-                // User clicked Edit, allow editing the form
-                Swal.fire({
-                    icon: "info",
-                    title: "You can now edit your event",
-                    timer: 1200,
-                    showConfirmButton: false,
-                });
-            }
-        });
+            });
+        } catch (error) {
+            console.error(error);
+            Swal.fire({
+                icon: "error",
+                title: "Error Creating Event",
+                text: error.message,
+            });
+        }
     };
 
-
     return (
-        <div className=" dark:text-gray-400  rounded-lg shadow-lg  p-8">
-            <h2 className="text-3xl font-bold text-green-500 dark:text-green-500 mb-8 text-center">
+        <div className="dark:text-gray-500 rounded-lg shadow-lg p-8">
+            <h2 className="text-3xl font-bold text-green-500 mb-8 text-center">
                 Create New Event
             </h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-
-                {/* Row 1: Title & Event Type */}
+                {/* Title & Type */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label className="block font-semibold mb-1">Event Title</label>
@@ -85,9 +94,8 @@ const CreateEvent = () => {
                             placeholder="Enter event title"
                             className={`input input-bordered w-full ${errors.title ? "input-error" : ""}`}
                         />
-                        {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>}
+                        {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
                     </div>
-
                     <div>
                         <label className="block font-semibold mb-1">Event Type</label>
                         <select
@@ -100,22 +108,22 @@ const CreateEvent = () => {
                                 <option key={type} value={type}>{type}</option>
                             ))}
                         </select>
-                        {errors.type && <p className="text-red-500 text-sm mt-1">{errors.type.message}</p>}
+                        {errors.type && <p className="text-red-500 text-sm">{errors.type.message}</p>}
                     </div>
                 </div>
 
-                {/* Row 2: Thumbnail URL & Location */}
+                {/* File Upload & Location */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label className="block font-semibold mb-1">Thumbnail URL</label>
+                        <label className="block font-semibold mb-1">Thumbnail Image</label>
                         <input
-                            {...register("thumbnail", { required: "Thumbnail URL is required" })}
-                            placeholder="Enter thumbnail image URL"
-                            className={`input input-bordered w-full ${errors.thumbnail ? "input-error" : ""}`}
+                            type="file"
+                            accept="image/*"
+                            {...register("thumbnail", { required: "Thumbnail image is required" })}
+                            className="file-input file-input-bordered w-full"
                         />
-                        {errors.thumbnail && <p className="text-red-500 text-sm mt-1">{errors.thumbnail.message}</p>}
+                        {errors.thumbnail && <p className="text-red-500 text-sm">{errors.thumbnail.message}</p>}
                     </div>
-
                     <div>
                         <label className="block font-semibold mb-1">Location</label>
                         <input
@@ -123,10 +131,11 @@ const CreateEvent = () => {
                             placeholder="Enter event location"
                             className={`input input-bordered w-full ${errors.location ? "input-error" : ""}`}
                         />
-                        {errors.location && <p className="text-red-500 text-sm mt-1">{errors.location.message}</p>}
+                        {errors.location && <p className="text-red-500 text-sm">{errors.location.message}</p>}
                     </div>
                 </div>
-                {/* Row 4: Description */}
+
+                {/* Description */}
                 <div>
                     <label className="block font-semibold mb-1">Event Description</label>
                     <textarea
@@ -134,10 +143,10 @@ const CreateEvent = () => {
                         placeholder="Write a short description..."
                         className={`textarea textarea-bordered w-full min-h-[120px] ${errors.description ? "textarea-error" : ""}`}
                     />
-                    {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
+                    {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
                 </div>
 
-                {/* Row 3: Event Date */}
+                {/* Date */}
                 <div>
                     <label className="block font-semibold mb-1">Event Date</label>
                     <Controller
@@ -155,12 +164,10 @@ const CreateEvent = () => {
                             />
                         )}
                     />
-                    {errors.eventDate && <p className="text-red-500 text-sm mt-1">{errors.eventDate.message}</p>}
+                    {errors.eventDate && <p className="text-red-500 text-sm">{errors.eventDate.message}</p>}
                 </div>
 
-
-
-                {/* Submit Button */}
+                {/* Submit */}
                 <div className="text-center">
                     <button type="submit" className="btn btn-primary w-full px-8">
                         Create Event
@@ -168,7 +175,6 @@ const CreateEvent = () => {
                 </div>
             </form>
         </div>
-
     );
 };
 
