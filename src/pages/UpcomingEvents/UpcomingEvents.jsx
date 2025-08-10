@@ -48,7 +48,7 @@ const UpcomingEvents = () => {
     if (loading) {
         return (
             <div className="flex justify-center items-center h-64">
-                <p className="text-lg font-semibold">Loading events...</p>
+                <p className="text-lg font-semibold"><span className="loading loading-bars loading-xl"></span></p>
             </div>
         );
     }

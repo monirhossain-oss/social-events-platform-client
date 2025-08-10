@@ -54,7 +54,7 @@ const ManageEvents = () => {
     };
 
 
-    if (loading) return <p className="text-center mt-10">Loading your events...</p>;
+    if (loading) return <p className="text-center mt-10"><span className="loading loading-bars loading-xl"></span></p>;
     if (!events.length) {
         return (
             <p className="text-center mt-10 text-gray-600 dark:text-gray-400">

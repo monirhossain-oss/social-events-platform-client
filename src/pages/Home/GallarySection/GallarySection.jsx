@@ -11,7 +11,7 @@ const galleryImages = [img1, img2, img3, img4, img5, img6];
 
 const GallerySection = () => {
     return (
-        <section className="py-12 bg-gray-50 mt-8 rounded-2xl dark:bg-gray-800">
+        <section className="py-12 bg-gray-50 mt-8 rounded-2xl">
             <div className="container mx-auto px-6">
                 <h2 className="text-3xl font-bold mb-8 text-center text-gray-800 dark:text-green-500">
                     Event Gallery

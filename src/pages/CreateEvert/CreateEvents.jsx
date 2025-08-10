@@ -71,7 +71,7 @@ const CreateEvent = () => {
 
     return (
         <div className="max-w-3xl mx-auto p-6 bg-white rounded shadow mt-8">
-            <h2 className="dark:text-2xl dark:font-bold dark:text-black mb-6 text-center">Create New Event</h2>
+            <h2 className="text-2xl font-bold text-green-500 dark:text-green-500 mb-6 text-center">Create New Event</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
                 {/* Title */}

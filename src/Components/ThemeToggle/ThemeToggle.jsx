@@ -7,9 +7,9 @@ const ThemeToggle = () => {
     return (
         <button
             onClick={toggleTheme}
-            className=" rounded-full text-2xl   text-black dark:text-white"
+            className="rounded-full text-2xl cursor-pointer text-black dark:text-white"
         >
-            {theme === 'dark' ? '☀️' :'🌙'}
+            {theme === 'dark' ?'🌙' :'☀️'}
         </button>
     );
 };
