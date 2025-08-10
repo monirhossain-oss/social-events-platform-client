@@ -77,7 +77,7 @@ const EventDetails = () => {
     if (!event) return <p className="text-center mt-8">Event not found</p>;
 
     return (
-        <div className="container mx-auto my-8 p-6 max-w-3xl bg-gradient-to-br from-white/70 via-white/60 to-white/50 dark:from-gray-900/80 dark:via-gray-900/60 dark:to-gray-900/40 backdrop-blur-lg border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl">
+        <div className="container mx-auto p-6 bg-gradient-to-br from-white/70 via-white/60 to-white/50 dark:from-gray-900/80 dark:via-gray-900/60 dark:to-gray-900/40 backdrop-blur-lg border border-gray-200 dark:border-gray-700 shadow-xl">
             <h1 className="text-4xl font-extrabold mb-6 text-gray-800 dark:text-green-500 text-center">
                 {event.title}
             </h1>

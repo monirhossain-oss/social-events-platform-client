@@ -93,29 +93,43 @@ const UpcomingEvents = () => {
                         No upcoming events found.
                     </p>
                 ) : (
-                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         {events.map((event) => (
                             <div
                                 key={event._id}
-                                className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition p-4 flex flex-col"
+                                className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex flex-col"
                             >
-                                <img
-                                    src={event.thumbnail}
-                                    alt={event.title}
-                                    className="h-32 w-full object-cover rounded"
-                                />
-                                <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white">
-                                    {event.title}
-                                </h3>
-                                <Link
-                                    to={`/events/${event._id}`}
-                                    className="mx-auto bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded text-center block transition mt-4"
-                                >
-                                    View Event
-                                </Link>
+                                {/* Image */}
+                                <div className="relative">
+                                    <img
+                                        src={event.thumbnail}
+                                        alt={event.title}
+                                        className="h-48 w-full object-cover rounded-t-xl"
+                                    />
+                                    <span className="absolute top-3 left-3 bg-green-600 text-white text-xs font-semibold px-3 py-1 rounded-full shadow">
+                                        {new Date(event.eventDate).toLocaleDateString()}
+                                    </span>
+                                </div>
+
+                                {/* Content */}
+                                <div className="p-5 flex flex-col flex-grow">
+                                    <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2 line-clamp-2">
+                                        {event.title}
+                                    </h3>
+                                    <p className="text-gray-500 dark:text-gray-300 text-sm mb-4 line-clamp-2">
+                                        📍 {event.location}
+                                    </p>
+                                    <Link
+                                        to={`/events/${event._id}`}
+                                        className="mt-auto bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg text-center transition-colors duration-300"
+                                    >
+                                        View Event
+                                    </Link>
+                                </div>
                             </div>
                         ))}
                     </div>
+
                 )}
             </div>
         </section>
