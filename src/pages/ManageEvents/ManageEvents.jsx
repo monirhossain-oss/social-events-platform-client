@@ -64,13 +64,13 @@ const ManageEvents = () => {
     }
 
     return (
-        <section className="max-w-6xl mx-auto p-6">
+        <section className="mx-auto p-6">
             <h2 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-green-400">Manage Your Events</h2>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 {events.map(event => (
-                    <div key={event._id} className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+                    <div key={event._id} className="bg-gray-100 rounded-lg shadow p-4">
                         <img src={event.thumbnail} alt={event.title} className="rounded mb-3 h-40 w-full object-cover" />
-                        <h3 className="text-xl font-semibold text-gray-800 dark:text-white">{event.title}</h3>
+                        <h3 className="text-xl font-semibold text-gray-800 dark:text-black">{event.title}</h3>
                         <p className="text-sm text-gray-600 dark:text-gray-400">Location: {event.location}</p>
                         <p className="text-sm text-gray-600 dark:text-gray-400">Type: {event.type}</p>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">

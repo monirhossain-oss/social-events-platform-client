@@ -17,7 +17,7 @@ const Banner = () => {
 
     return (
         <Carousel
-            className="mt-8 m-4 rounded-lg overflow-hidden"
+            className="rounded-lg overflow-hidden"
             autoPlay
             infiniteLoop
             showThumbs={false}

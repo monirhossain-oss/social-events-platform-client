@@ -78,7 +78,7 @@ const JoinEvents = () => {
                             alt={event.title}
                             className="rounded-md mb-4 h-40 object-cover"
                         />
-                        <h3 className="text-xl font-semibold mb-1 text-gray-700 dark:text-gray-200">{event.title}</h3>
+                        <h3 className="text-xl font-semibold mb-1 text-gray-700 dark:text-gray-800">{event.title}</h3>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                             <strong>Location:</strong> {event.location}
                         </p>

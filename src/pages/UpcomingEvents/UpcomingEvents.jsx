@@ -6,6 +6,7 @@ const UpcomingEvents = () => {
     const [loading, setLoading] = useState(true);
     const [events, setEvents] = useState([]);
     const [type, setType] = useState('');
+    // console.log(events)
 
     const [searchInput, setSearchInput] = useState('');
     const [search, setSearch] = useState('');
@@ -43,7 +44,7 @@ const UpcomingEvents = () => {
         }
     };
 
-    const futureEvents = events.filter(event => new Date(event.eventDate) >= new Date());
+    // const futureEvents = events.filter(event => new Date(event.eventDate) >= new Date());
 
     if (loading) {
         return (
@@ -53,8 +54,10 @@ const UpcomingEvents = () => {
         );
     }
 
+    console.log(events)
+
     return (
-        <section className="py-12  rounded-2xl bg-gray-50 dark:bg-gray-900">
+        <section className="py-12">
             <div className="container mx-auto px-6">
                 <h2 className="text-3xl font-bold mb-8 text-center text-gray-800 dark:text-green-400">
                     Upcoming Social Development Events
@@ -85,13 +88,13 @@ const UpcomingEvents = () => {
                     </select>
                 </div>
 
-                {futureEvents.length === 0 ? (
+                {events.length === 0 ? (
                     <p className="text-center text-gray-600 dark:text-gray-400">
                         No upcoming events found.
                     </p>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        {futureEvents.map((event) => (
+                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-2">
+                        {events.map((event) => (
                             <div
                                 key={event._id}
                                 className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition p-4 flex flex-col"
@@ -99,15 +102,11 @@ const UpcomingEvents = () => {
                                 <img
                                     src={event.thumbnail}
                                     alt={event.title}
-                                    className="h-48 w-full object-cover rounded"
+                                    className="h-32 w-full object-cover rounded"
                                 />
                                 <h3 className="mt-4 text-xl font-semibold text-gray-800 dark:text-white">
                                     {event.title}
                                 </h3>
-                                <p className="text-gray-600 dark:text-gray-300">📍 {event.location}</p>
-                                <p className="text-gray-600 dark:text-gray-300">
-                                    📅 {new Date(event.eventDate).toDateString()}
-                                </p>
                                 <Link
                                     to={`/events/${event._id}`}
                                     className="mx-auto bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded text-center block transition mt-4"

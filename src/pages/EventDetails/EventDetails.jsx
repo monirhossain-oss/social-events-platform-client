@@ -69,8 +69,12 @@ const EventDetails = () => {
     };
 
 
-    if (loading) return <p>Loading...</p>;
-    if (!event) return <p>Event not found</p>;
+    if (loading) return (
+        <div className="flex justify-center items-center min-h-[300px]">
+            <span className="loading loading-bars loading-xl"></span>
+        </div>
+    );
+    if (!event) return <p className="text-center mt-8">Event not found</p>;
 
     return (
         <div className="container mx-auto my-8 p-6 max-w-3xl bg-gradient-to-br from-white/70 via-white/60 to-white/50 dark:from-gray-900/80 dark:via-gray-900/60 dark:to-gray-900/40 backdrop-blur-lg border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl">

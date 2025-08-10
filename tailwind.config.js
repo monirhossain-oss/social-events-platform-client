@@ -1,6 +1,5 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-    darkMode: "class", // Tailwind dark mode class strategy
+    darkMode: 'class',
     content: [
         "./index.html",
         "./src/**/*.{js,ts,jsx,tsx}",
@@ -9,26 +8,26 @@ module.exports = {
         extend: {
             colors: {
                 primary: {
-                    DEFAULT: "#4F46E5", // Indigo 600
-                    dark: "#4338CA",    // Darker shade for hover
+                    DEFAULT: '#22c55e', // Tailwind green-500
+                    dark: '#16a34a',    // Tailwind green-600
                 },
                 secondary: {
-                    DEFAULT: "#EC4899", // Pink 500
-                    dark: "#DB2777",
+                    DEFAULT: '#ef4444', // Tailwind red-500
+                    dark: '#dc2626',    // Tailwind red-600
                 },
                 accent: {
-                    DEFAULT: "#FBBF24", // Amber 400
-                    dark: "#F59E0B",
+                    DEFAULT: '#fbbf24', // Amber 400
+                    dark: '#f59e0b',
                 },
                 neutral: {
-                    light: "#F3F4F6",   // Gray 100
-                    dark: "#1F2937",    // Gray 800
+                    light: '#f3f4f6',   // Gray 100
+                    dark: '#1f2937',    // Gray 800
                 },
             },
         },
     },
     plugins: [require("daisyui")],
     daisyui: {
-        themes: ["light", "dark"], // DaisyUI থিম গুলো
+        themes: ["light", "dark"],
     },
 };
